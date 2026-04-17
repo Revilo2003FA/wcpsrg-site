@@ -1,57 +1,541 @@
-W
-WCPSRG
-About
-Leadership
-Our Work
-Research
-Contact
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- ============================================================== -->
+  <!-- EDIT: Browser tab title and search-engine description.          -->
+  <!-- ============================================================== -->
+  <title>West Coast Policy and Strategy Research Group | University of Portland</title>
+  <meta name="description" content="A student-led research group at the University of Portland producing objective, non-partisan strategies and policies for Portland and west coast cities." />
 
+  <style>
+    :root {
+      --ink: #1a1a1f;
+      --ink-soft: #4a4a55;
+      --muted: #6b6b76;
+      --line: #e6e6ea;
+      --bg: #ffffff;
+      --bg-alt: #faf9fc;
+      --accent: #4b2e83;       /* deep purple — UP nod, understated */
+      --accent-soft: #efeaf5;
+      --accent-ink: #2f1b5a;
+      --max: 1060px;
+    }
 
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+      font-size: 17px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
+    /* ---------- Nav ---------- */
+    nav.site-nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 5;
+    }
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      font-weight: 600;
+      color: white;
+      letter-spacing: -0.01em;
+    }
+    .brand span { color: #d6c5f0; }
+    .nav-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .nav-links a {
+      color: rgba(255,255,255,0.88);
+      font-size: 15px;
+    }
+    .nav-links a:hover { color: white; text-decoration: none; }
 
-UNIVERSITY OF PORTLAND
-West Coast Policy and Strategy Research Group
-“The University of, for, and with Portland — and our local, regional, national, and global communities.”
-— Robert Kelly, President of the University of Portland
-Read our research
-Learn more
-About the group
-Rationale
-Due to structural funding problems, rapid technological change, and political polarization, local and state governments lack capacity and stable partnerships for long-term — or even medium-term — planning, and are therefore unable to address basic problems.
-We have an approach that suggests a way forward. The confluence of principles of strategy and policy makes it possible to create and apply a framework that provides a new way of thinking about governance, and increases the possibility of creating solutions to what seem to be intractable problems for Portland and across the western United States.
-Why the University of Portland?
-Our university has embarked on a strategy of being not just the University of Portland, but the University of, for, and with Portland and its local, regional, national, and global communities.
-What better way to show that commitment than to collaborate on building solutions? It is easy to bemoan how Portland is discussed in the news — it is more efficacious to take the opportunity to be part of the solution, and to attract others, including students, who want to be part of it too.
-Leadership
-FACULTY ADVISOR
-Dr. Jeffrey Meiser
-Professor of Political Science and Global Affairs
-COMMUNITY ADVISOR
-Tom Rinehart
-Civic and government leader (UP MBA '14)
-FOUNDING DIRECTOR
-Maggie Dapp
-Student Researcher, UP 2026
-FOUNDING DIRECTOR
-Oliver Jeppe
-Student Researcher, UP 2026
-Our work
-		Production of objective, non-partisan strategies and policies for addressing the central challenges of Portland and beyond. Coordination with government, business associations, and community groups. Promotion of ideas through media outreach, public events, and publications. Fundraising to sustain the group's research and outreach activity.
-Research
-Papers currently in progress from members of the group. Click any paper to read the full draft.
-IN PROGRESS
-Unsheltered Homelessness in Portland — Mayor Wilson's Strategy
-Oliver Jeppe · University of Portland, Class of 2026
-An analysis of Mayor Keith Wilson's strategy for reducing unsheltered homelessness in Portland. The paper examines how Wilson defines the challenge and the main policies he proposes to address it. It finds that Wilson's definition of the challenge is reasonable, but his proposed policies are unlikely to have a significant positive effect without changes.
-Read the paper
-IN PROGRESS
-Analyzing the Portland City Charter Commission's Governmental Structural Reform Strategy
-Maggie Dapp · University of Portland, Class of 2026
-An examination of the recent reform to Portland city government — the problems the reform was meant to solve, and whether the reform was successful on its own terms. While it is difficult to draw clear conclusions so soon after implementation, this paper finds the reforms were partially successful at best, and that more clarity is needed on governance challenges in Portland and how to measure governance progress.
-Read the paper
-Contact
-To collaborate with the group, propose a topic, or ask about joining as a student researcher, contact our faculty advisor:
-Dr. Jeffrey Meiser Professor of Political Science and Global Affairs, University of Portland meiser@up.edu
-© 2026 West Coast Policy and Strategy Research Group · University of Portland
-Contact: meiser@up.edu
+    /* ---------- Hero with rotating background ---------- */
+    header.hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+      /* Fallback gradient — shown if photos don't load */
+      background: linear-gradient(135deg, #2f1b5a 0%, #4b2e83 60%, #1a1a1f 100%);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .bg-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.8s ease-in-out;
+    }
+    .bg-slide.active { opacity: 1; }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(47, 27, 90, 0.72) 0%, rgba(26, 26, 31, 0.55) 100%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max);
+      width: 100%;
+      margin: 0 auto;
+      color: white;
+    }
+    .eyebrow {
+      color: rgba(255,255,255,0.85);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: 52px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin: 0 0 28px;
+      font-weight: 700;
+      color: white;
+      max-width: 900px;
+    }
+    .kelly-quote {
+      font-size: 21px;
+      font-style: italic;
+      color: rgba(255,255,255,0.94);
+      border-left: 3px solid rgba(255,255,255,0.7);
+      padding-left: 22px;
+      margin: 0 0 36px;
+      max-width: 720px;
+      line-height: 1.5;
+    }
+    .kelly-quote cite {
+      display: block;
+      font-size: 14.5px;
+      font-style: normal;
+      color: rgba(255,255,255,0.75);
+      margin-top: 12px;
+      letter-spacing: 0.02em;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .btn-primary { background: white; color: var(--accent-ink); }
+    .btn-primary:hover { background: #f2ecfa; text-decoration: none; }
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border-color: rgba(255,255,255,0.6);
+    }
+    .btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.08); text-decoration: none; }
+
+    /* ---------- Sections ---------- */
+    section {
+      padding: 80px 24px;
+      border-top: 1px solid var(--line);
+    }
+    section.alt { background: var(--bg-alt); }
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: 30px;
+      letter-spacing: -0.015em;
+      margin: 0 0 28px;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 19px;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    p { margin: 0 0 16px; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 740px) {
+      .two-col { grid-template-columns: 1fr; gap: 28px; }
+      h1 { font-size: 36px; }
+      .kelly-quote { font-size: 18px; }
+      header.hero { min-height: 80vh; padding: 100px 24px 60px; }
+      section { padding: 56px 24px; }
+    }
+
+    /* ---------- Leadership cards ---------- */
+    .people {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+    .person {
+      padding: 22px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .person .role {
+      color: var(--accent);
+      font-size: 12.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .person .name { font-weight: 600; font-size: 17px; margin-bottom: 4px; }
+    .person .sub { font-size: 14.5px; color: var(--muted); }
+
+    /* ---------- Work list ---------- */
+    ul.work { list-style: none; padding: 0; margin: 0; }
+    ul.work li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink-soft);
+      display: flex;
+      gap: 14px;
+      align-items: baseline;
+    }
+    ul.work li:last-child { border-bottom: none; }
+    ul.work li::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      transform: translateY(-2px);
+    }
+
+    /* ---------- Papers ---------- */
+    .paper {
+      display: block;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      margin-bottom: 16px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+      color: var(--ink);
+    }
+    .paper:hover {
+      border-color: var(--accent);
+      box-shadow: 0 6px 22px rgba(75, 46, 131, 0.08);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .paper .tag {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .paper h3 { font-size: 20px; margin-bottom: 6px; }
+    .paper .author { color: var(--muted); font-size: 14.5px; margin-bottom: 10px; }
+    .paper .abstract { color: var(--ink-soft); font-size: 15.5px; margin: 0; }
+    .paper .read {
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 12px;
+      display: inline-block;
+    }
+    .paper .read::after { content: " →"; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      padding: 44px 24px;
+      background: var(--bg-alt);
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================== -->
+  <!-- NAVIGATION                                                      -->
+  <!-- ============================================================== -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <div class="brand">WCPSRG<span>.</span></div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#leadership">Leadership</a>
+        <a href="#work">Our Work</a>
+        <a href="#research">Research</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================== -->
+  <!-- HERO (group name first, then Kelly quote)                       -->
+  <!-- Background photos rotate every 6 seconds.                       -->
+  <!-- To change the photos: replace the files in the /images folder.  -->
+  <!-- Add more: duplicate a <div class="bg-slide"> line below.        -->
+  <!-- ============================================================== -->
+  <header class="hero">
+    <div class="hero-bg">
+      <div class="bg-slide" style="background-image: url('images/campus-1.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('images/campus-2.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('images/campus-3.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('images/campus-4.jpg');"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="eyebrow">University of Portland</div>
+
+      <!-- EDIT: Group name -->
+      <h1>West Coast Policy and Strategy Research Group</h1>
+
+      <!-- EDIT: President Kelly quote -->
+      <blockquote class="kelly-quote">
+        &ldquo;The University of, for, and with Portland — and our local, regional,
+        national, and global communities.&rdquo;
+        <cite>— Robert Kelly, President of the University of Portland</cite>
+      </blockquote>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#research">Read our research</a>
+        <a class="btn btn-secondary" href="#about">Learn more</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================== -->
+  <!-- ABOUT                                                           -->
+  <!-- ============================================================== -->
+  <section id="about">
+    <div class="container">
+      <h2>About the group</h2>
+      <div class="two-col">
+        <div>
+          <h3>Rationale</h3>
+          <p>
+            Due to structural funding problems, rapid technological change, and
+            political polarization, local and state governments lack capacity and
+            stable partnerships for long-term — or even medium-term — planning,
+            and are therefore unable to address basic problems.
+          </p>
+          <p>
+            We have an approach that suggests a way forward. The confluence of
+            principles of strategy and policy makes it possible to create and
+            apply a framework that provides a new way of thinking about
+            governance, and increases the possibility of creating solutions to
+            what seem to be intractable problems for Portland and across the
+            western United States.
+          </p>
+        </div>
+        <div>
+          <h3>Why the University of Portland?</h3>
+          <p>
+            Our university has embarked on a strategy of being not just the
+            University <em>of</em> Portland, but the University <em>of, for, and with</em>
+            Portland and its local, regional, national, and global communities.
+          </p>
+          <p>
+            What better way to show that commitment than to collaborate on
+            building solutions? It is easy to bemoan how Portland is discussed
+            in the news — it is more efficacious to take the opportunity to be
+            part of the solution, and to attract others, including students, who
+            want to be part of it too.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- LEADERSHIP                                                      -->
+  <!-- EDIT: add/remove <div class="person"> blocks as people join.    -->
+  <!-- ============================================================== -->
+  <section id="leadership" class="alt">
+    <div class="container">
+      <h2>Leadership</h2>
+      <div class="people">
+        <div class="person">
+          <div class="role">Faculty Advisor</div>
+          <div class="name">Dr. Jeffrey Meiser</div>
+          <div class="sub">Professor of Political Science and Global Affairs</div>
+        </div>
+        <div class="person">
+          <div class="role">Community Advisor</div>
+          <div class="name">Tom Rinehart</div>
+          <div class="sub">Civic and government leader (UP MBA '14)</div>
+        </div>
+        <div class="person">
+          <div class="role">Founding Director</div>
+          <div class="name">Maggie Dapp</div>
+          <div class="sub">Student Researcher, UP 2026</div>
+        </div>
+        <div class="person">
+          <div class="role">Founding Director</div>
+          <div class="name">Oliver Jeppe</div>
+          <div class="sub">Student Researcher, UP 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- OUR WORK                                                        -->
+  <!-- ============================================================== -->
+  <section id="work">
+    <div class="container">
+      <h2>Our work</h2>
+      <ul class="work">
+        <li>Production of objective, non-partisan strategies and policies for addressing the central challenges of Portland and beyond.</li>
+        <li>Coordination with government, business associations, and community groups.</li>
+        <li>Promotion of ideas through media outreach, public events, and publications.</li>
+        <li>Fundraising to sustain the group's research and outreach activity.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- RESEARCH                                                        -->
+  <!-- EDIT: to add a new paper, copy one <a class="paper"> block and  -->
+  <!-- change the href, title, author, and abstract.                   -->
+  <!-- ============================================================== -->
+  <section id="research" class="alt">
+    <div class="container">
+      <h2>Research</h2>
+      <p style="color: var(--ink-soft); max-width: 720px; margin-bottom: 28px;">
+        Papers currently in progress from members of the group. Click any paper
+        to read the full draft.
+      </p>
+
+      <a class="paper" href="papers/homelessness-wilson.html">
+        <span class="tag">In progress</span>
+        <h3>Unsheltered Homelessness in Portland — Mayor Wilson's Strategy</h3>
+        <div class="author">Oliver Jeppe · University of Portland, Class of 2026</div>
+        <p class="abstract">
+          An analysis of Mayor Keith Wilson's strategy for reducing unsheltered
+          homelessness in Portland. The paper examines how Wilson defines the
+          challenge and the main policies he proposes to address it. It finds
+          that Wilson's definition of the challenge is reasonable, but his
+          proposed policies are unlikely to have a significant positive effect
+          without changes.
+        </p>
+        <span class="read">Read the paper</span>
+      </a>
+
+      <a class="paper" href="papers/portland-charter-reform.html">
+        <span class="tag">In progress</span>
+        <h3>Analyzing the Portland City Charter Commission's Governmental Structural Reform Strategy</h3>
+        <div class="author">Maggie Dapp · University of Portland, Class of 2026</div>
+        <p class="abstract">
+          An examination of the recent reform to Portland city government — the
+          problems the reform was meant to solve, and whether the reform was
+          successful on its own terms. While it is difficult to draw clear
+          conclusions so soon after implementation, this paper finds the reforms
+          were partially successful at best, and that more clarity is needed on
+          governance challenges in Portland and how to measure governance
+          progress.
+        </p>
+        <span class="read">Read the paper</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- CONTACT                                                         -->
+  <!-- EDIT: update the professor's email address below.               -->
+  <!-- ============================================================== -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p style="color: var(--ink-soft); max-width: 620px;">
+        To collaborate with the group, propose a topic, or ask about joining as
+        a student researcher, contact our faculty advisor:
+      </p>
+      <p>
+        <strong>Dr. Jeffrey Meiser</strong><br/>
+        Professor of Political Science and Global Affairs, University of Portland<br/>
+        <a href="mailto:meiser@up.edu">meiser@up.edu</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- FOOTER                                                          -->
+  <!-- EDIT: email and copyright year below.                           -->
+  <!-- ============================================================== -->
+  <footer>
+    <div class="container">
+      <div>© 2026 West Coast Policy and Strategy Research Group · University of Portland</div>
+      <div>Contact: <a href="mailto:meiser@up.edu">meiser@up.edu</a></div>
+    </div>
+  </footer>
+
+  <!-- ============================================================== -->
+  <!-- SCRIPT — rotates the background photos                          -->
+  <!-- Change the number 6000 to make it faster/slower (milliseconds). -->
+  <!-- ============================================================== -->
+  <script>
+    (function () {
+      var slides = document.querySelectorAll('.bg-slide');
+      if (!slides.length) return;
+      var i = 0;
+      slides[0].classList.add('active');
+      setInterval(function () {
+        slides[i].classList.remove('active');
+        i = (i + 1) % slides.length;
+        slides[i].classList.add('active');
+      }, 6000);
+    })();
+  </script>
+
+</body>
+</html>
