@@ -137,4 +137,474 @@
     .hero-actions {
       display: flex;
       gap: 12px;
-      flex-wrap
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .btn-primary { background: white; color: var(--accent-ink); }
+    .btn-primary:hover { background: #f2ecfa; text-decoration: none; }
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border-color: rgba(255,255,255,0.6);
+    }
+    .btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.08); text-decoration: none; }
+    /* ---------- Sections ---------- */
+    section {
+      padding: 80px 24px;
+      border-top: 1px solid var(--line);
+    }
+    section.alt { background: var(--bg-alt); }
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: 30px;
+      letter-spacing: -0.015em;
+      margin: 0 0 28px;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 19px;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    p { margin: 0 0 16px; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    @media (max-width: 740px) {
+      .two-col { grid-template-columns: 1fr; gap: 28px; }
+      h1 { font-size: 36px; }
+      .kelly-quote { font-size: 18px; }
+      header.hero { min-height: 80vh; padding: 100px 24px 60px; }
+      section { padding: 56px 24px; }
+    }
+    /* ---------- Leadership cards ---------- */
+    .people {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+    .person {
+      padding: 22px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .person .role {
+      color: var(--accent);
+      font-size: 12.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .person .name { font-weight: 600; font-size: 17px; margin-bottom: 4px; }
+    .person .sub { font-size: 14.5px; color: var(--muted); }
+    /* ---------- Work list ---------- */
+    ul.work { list-style: none; padding: 0; margin: 0; }
+    ul.work li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink-soft);
+      display: flex;
+      gap: 14px;
+      align-items: baseline;
+    }
+    ul.work li:last-child { border-bottom: none; }
+    ul.work li::before {
+      content: "";
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      transform: translateY(-2px);
+    }
+    /* ---------- Papers ---------- */
+    .paper {
+      display: block;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      margin-bottom: 16px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+      color: var(--ink);
+    }
+    .paper:hover {
+      border-color: var(--accent);
+      box-shadow: 0 6px 22px rgba(75, 46, 131, 0.08);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .paper .tag {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .paper h3 { font-size: 20px; margin-bottom: 6px; }
+    .paper .author { color: var(--muted); font-size: 14.5px; margin-bottom: 10px; }
+    .paper .abstract { color: var(--ink-soft); font-size: 15.5px; margin: 0; }
+    .paper .read {
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 12px;
+      display: inline-block;
+    }
+    .paper .read::after { content: " →"; }
+    /* ---------- Footer ---------- */
+    footer {
+      padding: 44px 24px;
+      background: var(--bg-alt);
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <!-- ============================================================== -->
+  <!-- NAVIGATION                                                      -->
+  <!-- ============================================================== -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <div class="brand">WCPSRG<span>.</span></div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#leadership">Leadership</a>
+        <a href="#work">Our Work</a>
+        <a href="#research">Research</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+  <!-- ============================================================== -->
+  <!-- HERO (group name first, then Kelly quote)                       -->
+  <!-- Background photos rotate every 6 seconds.                       -->
+  <!-- To change the photos: replace the files in the /images folder.  -->
+  <!-- Add more: duplicate a <div class="bg-slide"> line below.        -->
+  <!-- ============================================================== -->
+  <header class="hero">
+    <div class="hero-bg">
+      <div class="bg-slide" style="background-image: url('images/campus-1.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('images/campus-2.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('images/campus-3.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('images/campus-4.jpg');"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="eyebrow">University of Portland</div>
+      <!-- EDIT: Group name -->
+      <h1>West Coast Policy and Strategy Research Group</h1>
+      <!-- EDIT: President Kelly quote -->
+      <blockquote class="kelly-quote">
+        &ldquo;The University of, for, and with Portland — and our local, regional,
+        national, and global communities.&rdquo;
+        <cite>— Robert Kelly, President of the University of Portland</cite>
+      </blockquote>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#research">Read our research</a>
+        <a class="btn btn-secondary" href="#about">Learn more</a>
+      </div>
+    </div>
+  </header>
+  <!-- ============================================================== -->
+  <!-- ABOUT                                                           -->
+  <!-- ============================================================== -->
+  <section id="about">
+    <div class="container">
+      <h2>About the group</h2>
+      <div class="two-col">
+        <div>
+          <h3>Rationale</h3>
+          <p>
+            Due to structural funding problems, rapid technological change, and
+            political polarization, local and state governments lack capacity and
+            stable partnerships for long-term — or even medium-term — planning,
+            and are therefore unable to address basic problems.
+          </p>
+          <p>
+            We have an approach that suggests a way forward. The confluence of
+            principles of strategy and policy makes it possible to create and
+            apply a framework that provides a new way of thinking about
+            governance, and increases the possibility of creating solutions to
+            what seem to be intractable problems for Portland and across the
+            western United States.
+          </p>
+        </div>
+        <div>
+          <h3>Why the University of Portland?</h3>
+          <p>
+            Our university has embarked on a strategy of being not just the
+            University <em>of</em> Portland, but the University <em>of, for, and with</em>
+            Portland and its local, regional, national, and global communities.
+          </p>
+          <p>
+            What better way to show that commitment than to collaborate on
+            building solutions? It is easy to bemoan how Portland is discussed
+            in the news — it is more efficacious to take the opportunity to be
+            part of the solution, and to attract others, including students, who
+            want to be part of it too.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================== -->
+  <!-- LEADERSHIP                                                      -->
+  <!-- EDIT: add/remove <div class="person"> blocks as people join.    -->
+  <!-- ============================================================== -->
+  <section id="leadership" class="alt">
+    <div class="container">
+      <h2>Leadership</h2>
+      <div class="people">
+        <div class="person">
+          <div class="role">Faculty Advisor</div>
+          <div class="name">Dr. Jeffrey Meiser</div>
+          <div class="sub">Professor of Political Science and Global Affairs</div>
+        </div>
+        <div class="person">
+          <div class="role">Community Advisor</div>
+          <div class="name">Tom Rinehart</div>
+          <div class="sub">Civic and government leader (UP MBA '14)</div>
+        </div>
+        <div class="person">
+          <div class="role">Founding Director</div>
+          <div class="name">Maggie Dapp</div>
+          <div class="sub">Student Researcher, UP 2026</div>
+        </div>
+        <div class="person">
+          <div class="role">Founding Director</div>
+          <div class="name">Oliver Jeppe</div>
+          <div class="sub">Student Researcher, UP 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================== -->
+  <!-- OUR WORK                                                        -->
+  <!-- ============================================================== -->
+  <section id="work">
+    <div class="container">
+      <h2>Our work</h2>
+      <ul class="work">
+        <li>Production of objective, non-partisan strategies and policies for addressing the central challenges of Portland and beyond.</li>
+        <li>Coordination with government, business associations, and community groups.</li>
+        <li>Promotion of ideas through media outreach, public events, and publications.</li>
+        <li>Fundraising to sustain the group's research and outreach activity.</li>
+      </ul>
+    </div>
+  </section>
+  <!-- ============================================================== -->
+  <!-- RESEARCH                                                        -->
+  <!-- Papers are loaded LIVE from a Google Sheet (see script below).  -->
+  <!-- To add/edit/delete a paper, edit the Google Sheet — NOT this    -->
+  <!-- file. The two cards below are only a fallback, shown if the      -->
+  <!-- sheet can't be reached.                                          -->
+  <!-- ============================================================== -->
+  <section id="research" class="alt">
+    <div class="container">
+      <h2>Research</h2>
+      <p style="color: var(--ink-soft); max-width: 720px; margin-bottom: 28px;">
+        Research from members of the group. Click any paper to read it.
+      </p>
+      <div id="papers-list">
+        <!-- Fallback papers (shown only if the Google Sheet doesn't load) -->
+        <a class="paper" href="papers/homelessness-wilson.html">
+          <span class="tag">In progress</span>
+          <h3>Unsheltered Homelessness in Portland — Mayor Wilson's Strategy</h3>
+          <div class="author">Oliver Jeppe · University of Portland, Class of 2026</div>
+          <p class="abstract">
+            An analysis of Mayor Keith Wilson's strategy for reducing unsheltered
+            homelessness in Portland. The paper examines how Wilson defines the
+            challenge and the main policies he proposes to address it. It finds
+            that Wilson's definition of the challenge is reasonable, but his
+            proposed policies are unlikely to have a significant positive effect
+            without changes.
+          </p>
+          <span class="read">Read the paper</span>
+        </a>
+        <a class="paper" href="papers/portland-charter-reform.html">
+          <span class="tag">In progress</span>
+          <h3>Analyzing the Portland City Charter Commission's Governmental Structural Reform Strategy</h3>
+          <div class="author">Maggie Dapp · University of Portland, Class of 2026</div>
+          <p class="abstract">
+            An examination of the recent reform to Portland city government — the
+            problems the reform was meant to solve, and whether the reform was
+            successful on its own terms. While it is difficult to draw clear
+            conclusions so soon after implementation, this paper finds the reforms
+            were partially successful at best, and that more clarity is needed on
+            governance challenges in Portland and how to measure governance
+            progress.
+          </p>
+          <span class="read">Read the paper</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- ============================================================== -->
+  <!-- CONTACT                                                         -->
+  <!-- EDIT: update the professor's email address below.               -->
+  <!-- ============================================================== -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p style="color: var(--ink-soft); max-width: 620px;">
+        To collaborate with the group, propose a topic, or ask about joining as
+        a student researcher, contact our faculty advisor:
+      </p>
+      <p>
+        <strong>Dr. Jeffrey Meiser</strong><br/>
+        Professor of Political Science and Global Affairs, University of Portland<br/>
+        <a href="mailto:meiser@up.edu">meiser@up.edu</a>
+      </p>
+    </div>
+  </section>
+  <!-- ============================================================== -->
+  <!-- FOOTER                                                          -->
+  <!-- EDIT: email and copyright year below.                           -->
+  <!-- ============================================================== -->
+  <footer>
+    <div class="container">
+      <div>© 2026 West Coast Policy and Strategy Research Group · University of Portland</div>
+      <div>Contact: <a href="mailto:meiser@up.edu">meiser@up.edu</a></div>
+    </div>
+  </footer>
+  <!-- ============================================================== -->
+  <!-- SCRIPT                                                          -->
+  <!-- ============================================================== -->
+  <script>
+    // ---- Rotates the background photos (6000 = 6 seconds) ----
+    (function () {
+      var slides = document.querySelectorAll('.bg-slide');
+      if (!slides.length) return;
+      var i = 0;
+      slides[0].classList.add('active');
+      setInterval(function () {
+        slides[i].classList.remove('active');
+        i = (i + 1) % slides.length;
+        slides[i].classList.add('active');
+      }, 6000);
+    })();
+
+    // ============================================================
+    // LIVE PAPERS — loaded from a Google Sheet
+    // ------------------------------------------------------------
+    // PASTE YOUR PUBLISHED-CSV LINK BETWEEN THE QUOTES BELOW.
+    // It looks like:
+    //   https://docs.google.com/spreadsheets/d/e/XXXX/pub?output=csv
+    // Until you paste a link, the two fallback papers above stay shown.
+    // ============================================================
+    var SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzAdaoHg-A2E4VTpc8Nwq_2p3XzQB9QdwDFVTPSostduL_kRbalOADzdUKMuUTa4DWuffazH5Shyqg/pub?output=csv";
+
+    (function () {
+      if (!SHEET_CSV_URL) return; // no sheet connected yet — keep fallback
+      var list = document.getElementById('papers-list');
+      if (!list) return;
+
+      // Cache-bust so edits show up a bit faster
+      var url = SHEET_CSV_URL + (SHEET_CSV_URL.indexOf('?') > -1 ? '&' : '?') + 't=' + Date.now();
+
+      fetch(url)
+        .then(function (r) {
+          if (!r.ok) throw new Error('Sheet not reachable');
+          return r.text();
+        })
+        .then(function (csv) {
+          var rows = parseCSV(csv);
+          if (rows.length < 2) return; // header only / empty → keep fallback
+          var headers = rows[0].map(function (h) { return h.trim().toLowerCase(); });
+          var papers = rows.slice(1)
+            .filter(function (r) { return r.join('').trim() !== ''; })
+            .map(function (r) {
+              var o = {};
+              headers.forEach(function (h, i) { o[h] = (r[i] || '').trim(); });
+              return o;
+            });
+          if (!papers.length) return; // keep fallback
+          list.innerHTML = '';
+          papers.forEach(function (p) { list.appendChild(buildCard(p)); });
+        })
+        .catch(function () { /* leave the fallback papers in place */ });
+
+      function buildCard(p) {
+        var title = p.title || 'Untitled';
+        var author = p.author || '';
+        var year = p.year || '';
+        var abstract = p.abstract || '';
+        var status = p.status || '';
+        var link = p.link || '#';
+
+        var a = document.createElement('a');
+        a.className = 'paper';
+        a.href = link;
+        if (link && link !== '#') { a.target = '_blank'; a.rel = 'noopener'; }
+
+        var authorLine = esc(author);
+        if (year) authorLine += (authorLine ? ' · ' : '') + esc(year);
+
+        a.innerHTML =
+          (status ? '<span class="tag">' + esc(status) + '</span>' : '') +
+          '<h3>' + esc(title) + '</h3>' +
+          '<div class="author">' + authorLine + '</div>' +
+          '<p class="abstract">' + esc(abstract) + '</p>' +
+          '<span class="read">Read the paper</span>';
+        return a;
+      }
+
+      function esc(s) {
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function parseCSV(text) {
+        var rows = [], row = [], field = '', q = false;
+        for (var i = 0; i < text.length; i++) {
+          var c = text[i], n = text[i + 1];
+          if (q) {
+            if (c === '"' && n === '"') { field += '"'; i++; }
+            else if (c === '"') { q = false; }
+            else { field += c; }
+          } else {
+            if (c === '"') { q = true; }
+            else if (c === ',') { row.push(field); field = ''; }
+            else if (c === '\r') { /* ignore */ }
+            else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+            else { field += c; }
+          }
+        }
+        if (field !== '' || row.length) { row.push(field); rows.push(row); }
+        return rows;
+      }
+    })();
+  </script>
+</body>
+</html>
