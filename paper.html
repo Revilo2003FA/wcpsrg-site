@@ -113,9 +113,17 @@
       if (paper.pdf && /^https?:\/\//i.test(paper.pdf)) {
         html += '<a class="pdf-btn" href="' + esc(paper.pdf) + '">Read the full paper (PDF)</a>';
       }
+// Sections — each row becomes a heading + paragraph.
+      // If a section's Body is JUST a link, it renders as a button labeled with the Heading.
       sections.forEach(function (s) {
-        if (s.heading) html += '<h2>' + esc(s.heading) + '</h2>';
-        if (s.body) html += '<p class="section-body">' + esc(s.body) + '</p>';
+        var body = (s.body || '').trim();
+        var isLink = /^(https?:\/\/\S+|[\w./-]+\.(?:html|pdf))$/i.test(body);
+        if (isLink) {
+          html += '<a class="pdf-btn" href="' + esc(body) + '">' + esc(s.heading || 'Read more') + '</a>';
+        } else {
+          if (s.heading) html += '<h2>' + esc(s.heading) + '</h2>';
+          if (body) html += '<p class="section-body">' + esc(body) + '</p>';
+        }
       });
       container.innerHTML = html;
     }
