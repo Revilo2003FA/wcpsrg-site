@@ -38,7 +38,27 @@
     }
     .pdf-btn:hover { background: var(--accent-ink); }
     .section-body { white-space: pre-wrap; color: var(--ink); }
-    .loading, .error { color: var(--muted); }
+.loading, .error { color: var(--muted); }
+    .loader {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 120px 0; gap: 18px;
+    }
+    .loader-mark {
+      font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
+      color: var(--accent); animation: loaderPulse 1.4s ease-in-out infinite;
+    }
+    .loader-bar {
+      width: 150px; height: 3px; border-radius: 999px;
+      background: var(--accent-soft); overflow: hidden;
+    }
+    .loader-bar span {
+      display: block; height: 100%; width: 40%; border-radius: 999px;
+      background: var(--accent); animation: loaderSlide 1.1s ease-in-out infinite;
+    }
+    @keyframes loaderPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+    @keyframes loaderSlide { 0% { transform: translateX(-120%); } 100% { transform: translateX(360%); } }
+    #paper.loaded { animation: fadeIn 0.45s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     footer { text-align: center; padding: 30px 24px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
   </style>
 </head>
