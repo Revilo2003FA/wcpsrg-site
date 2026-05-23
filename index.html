@@ -565,7 +565,7 @@
         var a = document.createElement('a');
         a.className = 'paper';
         a.href = link;
-        if (link && link !== '#') { a.target = '_blank'; a.rel = 'noopener'; }
+        // Links open in the SAME window (like the rest of the site)
 
         var authorLine = esc(author);
         if (year) authorLine += (authorLine ? ' · ' : '') + esc(year);
