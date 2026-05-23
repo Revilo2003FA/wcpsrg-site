@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — West Coast Policy and Strategy Research Group</title>
+  <style>
+    :root {
+      --ink: #1a1a1f; --ink-soft: #4a4a55; --muted: #6b6b76; --line: #e6e6ea;
+      --bg: #ffffff; --bg-alt: #faf9fc; --accent: #4b2e83; --accent-soft: #efeaf5;
+      --accent-ink: #2f1b5a; --max: 780px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--ink); background: var(--bg); line-height: 1.7; font-size: 17px;
+    }
+    a { color: var(--accent); }
+    nav.site-nav { border-bottom: 1px solid var(--line); background: white; }
+    .nav-inner { max-width: 1060px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .brand { font-weight: 600; color: var(--ink); }
+    .brand span { color: var(--accent); }
+    .back { font-size: 14.5px; color: var(--ink-soft); text-decoration: none; }
+    .back:hover { color: var(--accent); }
+    article { max-width: var(--max); margin: 0 auto; padding: 64px 24px 96px; }
+    .tag {
+      display: inline-block; background: var(--accent-soft); color: var(--accent-ink);
+      padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 18px;
+    }
+    h1 { font-size: 38px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 16px; font-weight: 700; }
+    .byline { color: var(--muted); font-size: 15.5px; margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    h2 { font-size: 22px; margin: 40px 0 12px; letter-spacing: -0.01em; }
+    p { margin: 0 0 18px; }
+    .pdf-btn {
+      display: inline-block; background: var(--accent); color: white; padding: 12px 22px;
+      border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; margin: 6px 0 18px;
+    }
+    .pdf-btn:hover { background: var(--accent-ink); }
+    .section-body { white-space: pre-wrap; color: var(--ink); }
+    .loading, .error { color: var(--muted); }
+    footer { text-align: center; padding: 30px 24px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <div class="brand">WCPSRG<span>.</span></div>
+      <a class="back" href="index.html">← Back to all research</a>
+    </div>
+  </nav>
+  <article id="paper">
+    <p class="loading">Loading…</p>
+  </article>
+  <footer>© 2026 West Coast Policy and Strategy Research Group · University of Portland</footer>
+  <script>
+    var PAPERS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzAdaoHg-A2E4VTpc8Nwq_2p3XzQB9QdwDFVTPSostduL_kRbalOADzdUKMuUTa4DWuffazH5Shyqg/pub?gid=0&single=true&output=csv";
+    var SECTIONS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzAdaoHg-A2E4VTpc8Nwq_2p3XzQB9QdwDFVTPSostduL_kRbalOADzdUKMuUTa4DWuffazH5Shyqg/pub?gid=988689208&single=true&output=csv";
+
+    var container = document.getElementById('paper');
+    var id = getParam('id');
+
+    if (!PAPERS_CSV_URL || !SECTIONS_CSV_URL) {
+      container.innerHTML = '<p class="error">This page isn’t connected to the spreadsheet yet.</p>';
+    } else if (!id) {
+      container.innerHTML = '<p class="error">No paper was specified.</p>';
+    } else {
+      Promise.all([fetchCSV(PAPERS_CSV_URL), fetchCSV(SECTIONS_CSV_URL)])
+        .then(function (res) {
+          var papers = toObjects(res[0]);
+          var sections = toObjects(res[1]);
+          var paper = papers.filter(function (p) { return (p.slug || '').toLowerCase() === id.toLowerCase(); })[0];
+          if (!paper) { container.innerHTML = '<p class="error">Paper not found.</p>'; return; }
+          var mySections = sections.filter(function (s) { return (s.slug || '').toLowerCase() === id.toLowerCase(); });
+          render(paper, mySections);
+        })
+        .catch(function () {
+          container.innerHTML = '<p class="error">Couldn’t load this paper right now. Please try again later.</p>';
+        });
+    }
+
+    function render(paper, sections) {
+      document.title = (paper.title || 'Research') + ' — WCPSRG';
+      var html = '';
+      if (paper.status) html += '<span class="tag">' + esc(paper.status) + '</span>';
+      html += '<h1>' + esc(paper.title || 'Untitled') + '</h1>';
+      var by = esc(paper.author || '');
+      if (paper.year) by += (by ? ' · ' : '') + esc(paper.year);
+      if (by) html += '<div class="byline">' + by + '</div>';
+      if (paper.pdf && /^https?:\/\//i.test(paper.pdf)) {
+        html += '<a class="pdf-btn" href="' + esc(paper.pdf) + '">Read the full paper (PDF)</a>';
+      }
+      sections.forEach(function (s) {
+        if (s.heading) html += '<h2>' + esc(s.heading) + '</h2>';
+        if (s.body) html += '<p class="section-body">' + esc(s.body) + '</p>';
+      });
+      container.innerHTML = html;
+    }
+
+    function getParam(name) {
+      var m = location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
+      return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+    }
+    function fetchCSV(u) {
+      var url = u + (u.indexOf('?') > -1 ? '&' : '?') + 't=' + Date.now();
+      return fetch(url).then(function (r) { if (!r.ok) throw new Error('bad'); return r.text(); }).then(parseCSV);
+    }
+    function toObjects(rows) {
+      if (rows.length < 2) return [];
+      var h = rows[0].map(function (x) { return x.trim().toLowerCase(); });
+      return rows.slice(1)
+        .filter(function (r) { return r.join('').trim() !== ''; })
+        .map(function (r) { var o = {}; h.forEach(function (k, i) { o[k] = (r[i] || '').trim(); }); return o; });
+    }
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function parseCSV(text) {
+      var rows = [], row = [], field = '', q = false;
+      for (var i = 0; i < text.length; i++) {
+        var c = text[i], n = text[i + 1];
+        if (q) {
+          if (c === '"' && n === '"') { field += '"'; i++; }
+          else if (c === '"') { q = false; }
+          else { field += c; }
+        } else {
+          if (c === '"') { q = true; }
+          else if (c === ',') { row.push(field); field = ''; }
+          else if (c === '\r') { }
+          else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+          else { field += c; }
+        }
+      }
+      if (field !== '' || row.length) { row.push(field); rows.push(row); }
+      return rows;
+    }
+  </script>
+</body>
+</html>
