@@ -10,13 +10,26 @@
       --bg: #ffffff; --bg-alt: #faf9fc; --accent: #4b2e83; --accent-soft: #efeaf5;
       --accent-ink: #2f1b5a; --max: 780px;
     }
+    [data-theme="dark"] {
+      --ink: #e8e8f0; --ink-soft: #a8a8b8; --muted: #7a7a8a; --line: #2e2e38;
+      --bg: #12121a; --bg-alt: #1a1a24; --accent: #a07ee0; --accent-soft: #2a1f42;
+      --accent-ink: #c4a8f0;
+    }
     * { box-sizing: border-box; }
     body {
       margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       color: var(--ink); background: var(--bg); line-height: 1.7; font-size: 17px;
     }
     a { color: var(--accent); }
-    nav.site-nav { border-bottom: 1px solid var(--line); background: white; }
+    body { transition: background 0.25s ease, color 0.25s ease; }
+    nav.site-nav { border-bottom: 1px solid var(--line); background: var(--bg); }
+    .theme-toggle {
+      background: none; border: 1px solid var(--line); color: var(--ink-soft);
+      border-radius: 20px; padding: 5px 13px; font-size: 13.5px; cursor: pointer;
+      display: flex; align-items: center; gap: 6px; white-space: nowrap;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
     .nav-inner { max-width: 1060px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
     .brand { font-weight: 600; color: var(--ink); }
     .brand span { color: var(--accent); }
@@ -67,6 +80,9 @@
     <div class="nav-inner">
       <div class="brand">WCPSRG<span>.</span></div>
       <a class="back" href="index.html">← Back to all research</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <span id="theme-icon">🌙</span> <span id="theme-label">Dark</span>
+      </button>
     </div>
   </nav>
 <article id="paper">
@@ -77,6 +93,30 @@
   </article>
   <footer>© 2026 West Coast Policy and Strategy Research Group · University of Portland</footer>
   <script>
+    // ---- Dark / light mode toggle ----
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      var icon = document.getElementById('theme-icon');
+      var label = document.getElementById('theme-label');
+      var saved = localStorage.getItem('theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        icon.textContent = '☀️'; label.textContent = 'Light';
+      }
+      btn.addEventListener('click', function () {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+          document.documentElement.removeAttribute('data-theme');
+          icon.textContent = '🌙'; label.textContent = 'Dark';
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          icon.textContent = '☀️'; label.textContent = 'Light';
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    })();
+
     var PAPERS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzAdaoHg-A2E4VTpc8Nwq_2p3XzQB9QdwDFVTPSostduL_kRbalOADzdUKMuUTa4DWuffazH5Shyqg/pub?gid=0&single=true&output=csv";
     var SECTIONS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzAdaoHg-A2E4VTpc8Nwq_2p3XzQB9QdwDFVTPSostduL_kRbalOADzdUKMuUTa4DWuffazH5Shyqg/pub?gid=988689208&single=true&output=csv";
 
